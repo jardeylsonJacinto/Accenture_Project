@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import acc.br.email_service.model.Email;
 import acc.br.email_service.service.EmailService;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 public class EmailController {
@@ -14,6 +15,7 @@ public class EmailController {
     @Autowired
     private EmailService emailService;
 
+    @Operation(summary = "Metodo manual de envio de demail (TESTE)")
     @PostMapping("/send-email")
     public String sendEmail(@RequestBody Email email) {
         try {
