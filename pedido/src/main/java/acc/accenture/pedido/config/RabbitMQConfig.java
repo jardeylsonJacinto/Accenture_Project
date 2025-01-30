@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-  public static final String PEDIDO_EXCHANGE = "pedido.exchange";
-  public static final String PEDIDO_QUEUE = "pedido.queue";
+  public static final String PEDIDO_EXCHANGE = "pedido.exchange.grupo4";
+  public static final String PEDIDO_QUEUE = "pedido.queue.grupo4";
 
   @Bean
   public DirectExchange exchange() {

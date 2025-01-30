@@ -1,13 +1,20 @@
 package acc.accenture.pedido.controller;
 
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import acc.accenture.pedido.dtos.PedidoRequest;
 import acc.accenture.pedido.dtos.PedidoResponse;
 import acc.accenture.pedido.service.PedidoService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/pedidos")
@@ -20,6 +27,7 @@ public class PedidoController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED) // Define o código de status como 201 (Criado)
     public ResponseEntity<PedidoResponse> criarPedido(@RequestBody PedidoRequest request) {
         PedidoResponse response = pedidoService.criarPedido(request);
         return ResponseEntity.ok(response);
@@ -27,11 +35,13 @@ public class PedidoController {
 
     @GetMapping
     public ResponseEntity<List<PedidoResponse>> listarPedidos() {
-        return ResponseEntity.ok(pedidoService.listarPedidos());
+        List<PedidoResponse> pedidos = pedidoService.listarPedidos();
+        return pedidos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(pedidos);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PedidoResponse> buscarPedidoPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(pedidoService.buscarPedidoPorId(id));
+        return pedidoService.buscarPedidoPorId(id);
     }
+
 }

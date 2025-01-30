@@ -4,34 +4,52 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import acc.accenture.pedido.dtos.ClienteDTO;
+import acc.accenture.pedido.dtos.VendedorDTO;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
+@Table(name = "Pedido")
 public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idPedido")
     private Long id;
 
+    @Column(name = "PedidoDescricao", nullable = false, length = 45)
     private String descricao;
 
+    @Column(name = "PedidoValor", precision = 10, scale = 2)
     private BigDecimal valor;
 
+    @Column(name = "PedidoDataHora", nullable = false)
     private LocalDateTime dataHora;
 
-    private Long vendedorId;
+    @Column(name = "Vendedor_idVendedor", nullable = false)
+    private Long vendedorId; // ID do Vendedor (outra API)
 
-    private Long clienteId;
+    @Column(name = "Cliente_idCliente", nullable = false)
+    private Long clienteId; // ID do Cliente (outra API)
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PedidoItem> itens;
 
-    // Getters and Setters
+    @Transient
+    private VendedorDTO vendedor; // Dados do Vendedor via RabbitMQ
+
+    @Transient
+    private ClienteDTO cliente; // Dados do Cliente via RabbitMQ
+
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -86,5 +104,21 @@ public class Pedido {
 
     public void setItens(List<PedidoItem> itens) {
         this.itens = itens;
+    }
+
+    public VendedorDTO getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(VendedorDTO vendedor) {
+        this.vendedor = vendedor;
+    }
+
+    public ClienteDTO getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteDTO cliente) {
+        this.cliente = cliente;
     }
 }

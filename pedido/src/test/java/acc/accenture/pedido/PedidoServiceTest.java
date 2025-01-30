@@ -6,7 +6,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
+import acc.accenture.pedido.dtos.PedidoItemRequest;
 import acc.accenture.pedido.dtos.PedidoRequest;
 import acc.accenture.pedido.dtos.PedidoResponse;
 import acc.accenture.pedido.model.Pedido;
@@ -39,74 +40,62 @@ public class PedidoServiceTest {
 
     @Test
     public void testCriarPedido() {
-        // Dados de exemplo para o pedido
-        PedidoRequest request = new PedidoRequest();
-        request.setDescricao("Pedido de teste");
-        request.setValor(BigDecimal.valueOf(100));
+        List<PedidoItemRequest> itensPedido = new ArrayList<>();
+        itensPedido.add(new PedidoItemRequest(1L, 2));
+        PedidoRequest request = new PedidoRequest(
+                "Pedido de teste",
+                BigDecimal.valueOf(100),
+                1L, // VendedorId
+                1L, // ClienteId
+                itensPedido);
 
-        // Mock do comportamento do repositório
         Pedido savedPedido = new Pedido();
         savedPedido.setId(1L);
         savedPedido.setDescricao(request.getDescricao());
         savedPedido.setValor(request.getValor());
 
-        Mockito.when(pedidoRepository.save(Mockito.any(Pedido.class))).thenReturn(savedPedido);
+        Mockito.when(pedidoRepository.save(any(Pedido.class))).thenReturn(savedPedido);
 
-        // Executa o método
         PedidoResponse response = pedidoService.criarPedido(request);
 
-        // Verifica se o pedido foi salvo corretamente
         Assertions.assertThat(response.getId()).isEqualTo(savedPedido.getId());
         Assertions.assertThat(response.getDescricao()).isEqualTo(savedPedido.getDescricao());
         Assertions.assertThat(response.getValor()).isEqualTo(savedPedido.getValor());
 
-        // Verifica se a mensagem foi enviada para o RabbitMQ
         verify(rabbitTemplate).convertAndSend(eq("pedido.exchange"), eq("pedido.created"), any(Pedido.class));
     }
 
     @Test
     public void testListarPedidos() {
-        // Mock de lista de pedidos
-        List<Pedido> pedidos = Arrays.asList(
-                new Pedido(),
-                new Pedido());
+        List<Pedido> pedidos = new ArrayList<>();
+        pedidos.add(new Pedido());
+        pedidos.add(new Pedido());
+
         Mockito.when(pedidoRepository.findAll()).thenReturn(pedidos);
 
-        // Executa o método
         List<PedidoResponse> responses = pedidoService.listarPedidos();
 
-        // Verifica se a quantidade de pedidos retornados é igual a quantidade mockada
         Assertions.assertThat(responses.size()).isEqualTo(pedidos.size());
     }
 
     @Test
     public void testBuscarPedidoPorId_pedidoExistente() {
-        // ID do pedido mockado
         Long id = 1L;
-
-        // Mock do pedido
         Pedido pedido = new Pedido();
         pedido.setId(id);
 
         Mockito.when(pedidoRepository.findById(id)).thenReturn(Optional.of(pedido));
 
-        // Executa o método
-        PedidoResponse response = pedidoService.buscarPedidoPorId(id);
+        PedidoResponse response = pedidoService.buscarPedidoPorId(id).getBody();
 
-        // Verifica se o ID do pedido retornado é igual ao ID mockado
         Assertions.assertThat(response.getId()).isEqualTo(id);
     }
 
     @Test
     public void testBuscarPedidoPorId_pedidoInexistente() {
-        // ID do pedido mockado (inexistente)
         Long id = 1L;
-
         Mockito.when(pedidoRepository.findById(id)).thenReturn(Optional.empty());
 
-        // Executa o método e verifica se a exceção esperada é lançada
-        assertThrows(RuntimeException.class, () -> {
-            pedidoService.buscarPedidoPorId(id);
-        });
+        assertThrows(RuntimeException.class, () -> pedidoService.buscarPedidoPorId(id));
     }
 }

@@ -10,6 +10,15 @@ public class PedidoRequest {
     private Long clienteId;
     private List<PedidoItemRequest> itens;
 
+    public PedidoRequest(String descricao, BigDecimal valor, Long vendedorId, Long clienteId,
+            List<PedidoItemRequest> itens) {
+        this.descricao = descricao;
+        this.valor = valor;
+        this.vendedorId = vendedorId;
+        this.clienteId = clienteId;
+        this.itens = itens;
+    }
+
     public String getDescricao() {
         return descricao;
     }
@@ -48,26 +57,5 @@ public class PedidoRequest {
 
     public void setItens(List<PedidoItemRequest> itens) {
         this.itens = itens;
-    }
-}
-
-class PedidoItemRequest {
-    private Long produtoId;
-    private Integer quantidade;
-
-    public Long getProdutoId() {
-        return produtoId;
-    }
-
-    public void setProdutoId(Long produtoId) {
-        this.produtoId = produtoId;
-    }
-
-    public Integer getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
     }
 }

@@ -9,10 +9,11 @@ public class PedidoResponse {
   private String descricao;
   private BigDecimal valor;
   private LocalDateTime dataHora;
-  private String vendedor;
-  private String cliente;
+  private Long vendedorId;
+  private Long clienteId;
   private List<PedidoItemResponse> itens;
 
+  // Getters e Setters
   public Long getId() {
     return id;
   }
@@ -45,20 +46,20 @@ public class PedidoResponse {
     this.dataHora = dataHora;
   }
 
-  public String getVendedor() {
-    return vendedor;
+  public Long getVendedorId() {
+    return vendedorId;
   }
 
-  public void setVendedor(String vendedor) {
-    this.vendedor = vendedor;
+  public void setVendedorId(Long vendedor) {
+    this.vendedorId = vendedor;
   }
 
-  public String getCliente() {
-    return cliente;
+  public Long getClienteId() {
+    return clienteId;
   }
 
-  public void setCliente(String cliente) {
-    this.cliente = cliente;
+  public void setClienteId(Long cliente) {
+    this.clienteId = cliente;
   }
 
   public List<PedidoItemResponse> getItens() {
@@ -67,26 +68,5 @@ public class PedidoResponse {
 
   public void setItens(List<PedidoItemResponse> itens) {
     this.itens = itens;
-  }
-}
-
-class PedidoItemResponse {
-  private String produto;
-  private Integer quantidade;
-
-  public String getProduto() {
-    return produto;
-  }
-
-  public void setProduto(String produto) {
-    this.produto = produto;
-  }
-
-  public Integer getQuantidade() {
-    return quantidade;
-  }
-
-  public void setQuantidade(Integer quantidade) {
-    this.quantidade = quantidade;
   }
 }
