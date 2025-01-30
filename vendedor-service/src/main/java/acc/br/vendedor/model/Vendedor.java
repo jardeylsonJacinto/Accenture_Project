@@ -21,6 +21,15 @@ public class Vendedor {
 	private String vendedorSetor;
 	
 
+	public Vendedor(Integer idVendedor, String vendedorNome, String vendedorSetor) {
+		this.idVendedor = idVendedor;
+		this.vendedorNome = vendedorNome;
+		this.vendedorSetor = vendedorSetor;
+	}
+
+	public Vendedor() {
+	}
+
 	public Integer getIdVendedor() {
 		return idVendedor;
 	}

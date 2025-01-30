@@ -5,6 +5,18 @@ public class VendedorDTO {
 	private String vendedorNome;
 	
 	private String vendedorSetor;
+	
+	
+
+	public VendedorDTO(String vendedorNome, String vendedorSetor) {
+		this.vendedorNome = vendedorNome;
+		this.vendedorSetor = vendedorSetor;
+	}
+	
+
+	public VendedorDTO() {
+	}
+
 
 	public String getVendedorNome() {
 		return vendedorNome;

@@ -34,7 +34,11 @@ public class VendedorController {
 	@Operation(summary = "Retorna um vendedor especifico")
 	@GetMapping("/{id}")
 	public Optional<Vendedor> obterUm(@PathVariable Integer id){
-		return vendedorService.obterUm(id);
+		Optional<Vendedor> vendedor = vendedorService.obterUm(id);
+		if(vendedor.isPresent()) {
+			return vendedorService.obterUm(id);
+		}
+		return Optional.of(new Vendedor());
 	}
 	
 	@Operation(summary = "Deleta um vendedor")
