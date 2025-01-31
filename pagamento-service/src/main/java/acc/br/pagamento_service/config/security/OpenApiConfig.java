@@ -18,7 +18,7 @@ public class OpenApiConfig {
                 .components(new Components()
                         .addSecuritySchemes("bearer-key",
                                 new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")))
-                .info(new Info().title("Equipe 4 - Cliente").version("1.0"))
+                .info(new Info().title("Equipe 4 - Pagamento").version("1.0"))
                 .addSecurityItem(new SecurityRequirement().addList("bearer-key"));
     }
 }
