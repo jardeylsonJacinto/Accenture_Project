@@ -124,7 +124,7 @@ A sequência para iniciar e executar o projeto é a seguinte:
 
 O projeto está integrado ao **Swagger** para documentação e teste dos endpoints. Acesse a documentação da API em:
 
-[http://localhost:8084/swagger-ui/index.html](http://localhost:8084/swagger-ui/index.html)
+[http://localhost:8081](http://localhost:8081)
 
 # Endpoints da API
 
