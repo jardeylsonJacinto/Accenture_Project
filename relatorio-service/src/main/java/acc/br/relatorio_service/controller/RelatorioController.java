@@ -1,6 +1,5 @@
 package acc.br.relatorio_service.controller;
 
-import java.util.List;
 import java.util.Random;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -14,9 +13,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import acc.br.relatorio_service.convertformat.ConvertFormat;
-import acc.br.relatorio_service.dto.RelatorioPagamentos;
-import acc.br.relatorio_service.dto.RelatorioVendasPorProduto;
-import acc.br.relatorio_service.dto.RelatorioVendasPorVendedor;
 import acc.br.relatorio_service.model.Email;
 import acc.br.relatorio_service.service.RelatorioService;
 import io.swagger.v3.oas.annotations.Operation;
