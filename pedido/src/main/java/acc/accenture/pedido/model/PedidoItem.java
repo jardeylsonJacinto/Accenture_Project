@@ -14,8 +14,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
 @Entity
-@Table(name = "Pedido_item_Produto")
+@Table(name = "pedido_item_produto")
 public class PedidoItem implements Serializable {
+  private static final long serialVersionUID = 1L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
