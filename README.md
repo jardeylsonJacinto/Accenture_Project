@@ -26,7 +26,6 @@ A aplicação é dividida em módulos que se comunicam via RabbitMQ, cada um com
 - Simula o processamento de pagamentos e envia uma mensagem para a fila de **status do pedido**, indicando o progresso do pedido.
 
 #### 3️⃣ **Módulo de Estoque**
-- Consome mensagens da fila de pedidos.
 - Atualiza o estoque com base nos itens do pedido, garantindo a integridade do inventário.
 
 #### 4️⃣ **Módulo de Envio**
