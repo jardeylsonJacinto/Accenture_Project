@@ -17,22 +17,35 @@ A aplicação é dividida em módulos que se comunicam via RabbitMQ, cada um com
 
 ### Módulos
 
-#### 1. **Módulo de Pedidos**
+#### 1️⃣ **Módulo de Pedidos**
 - Recebe os pedidos e envia uma mensagem para o RabbitMQ com os detalhes do pedido.
 - Utiliza um **exchange do tipo direct** para enviar a mensagem para a fila específica de pedidos.
 
-#### 2. **Módulo de Pagamento**
+#### 2️⃣ **Módulo de Pagamento**
 - Consome mensagens da fila de pedidos.
 - Simula o processamento de pagamentos e envia uma mensagem para a fila de **status do pedido**, indicando o progresso do pedido.
 
-#### 3. **Módulo de Estoque**
+#### 3️⃣ **Módulo de Estoque**
 - Consome mensagens da fila de pedidos.
 - Atualiza o estoque com base nos itens do pedido, garantindo a integridade do inventário.
 
-#### 4. **Módulo de Envio**
+#### 4️⃣ **Módulo de Envio**
 - Consome mensagens da fila de **status do pedido**.
 - Envia um e-mail de confirmação para o cliente, avisando sobre o status do pedido.
 
+#### 5️⃣ **Módulo de Cliente**
+- Permite visualização dos status dos pedidos.
+- Permite realização de pagamentos.
+
+#### 6️⃣ **Módulo de Vendedor**
+- Permite cadastro de vendedores.
+
+#### 7️⃣ **Módulo de Relatório**
+- Envio de relatórios para o e-mail.
+
+#### 8️⃣ **Módulo de Login**
+- Cadastro de novos usuários do sistema.
+- Geração de token JWT para autenticação.
 ## Extensões e Melhorias
 
 Este projeto pode ser expandido com as seguintes funcionalidades adicionais:
